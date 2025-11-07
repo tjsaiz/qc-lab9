@@ -59,6 +59,10 @@ class QuantumLab:
             - Use Python's built-in pow(a, x, N) function
             - This computes modular exponentiation efficiently
         """
+        res = pow(a, x, N)
+        
+        return res
+        
         pass
 
     # =========================================================================
@@ -90,6 +94,10 @@ class QuantumLab:
             - Use modular_exponentiation(a, r, N)
             - Return r when result equals 1
         """
+        for r in range(1, N):
+            if QuantumLab.modular_exponentiation(self,a,r,N) == 1:
+                return r
+        
         pass
 
     # =========================================================================
@@ -132,6 +140,14 @@ class QuantumLab:
             - Compute q = gcd(x + 1, N)
             - Return (p, q)
         """
+        if r % 2 != 0:
+            return (None, None)
+        
+        x = QuantumLab.modular_exponentiation(self, a, r//2, N)
+        p = math.gcd(x-1, N)
+        q = math.gcd(x+1, N)
+        
+        return (p,q)
         pass
 
     # =========================================================================
@@ -161,9 +177,24 @@ class QuantumLab:
             - Check if q > 1 and q < N
             - Return True only if all conditions are met
         """
+        if p*q == N and p>1 and p<N and q>1 and q<N:
+            return True
+        return False
+    
         pass
 
 
 if __name__ == "__main__":
     lab = QuantumLab()
-    # Test your implementations here
+    
+    N = 15
+    a = 2
+    
+    r = lab.find_period(a, N)
+    factors = lab.extract_factors(a, N, r)
+    
+    if lab.verify_factorization(N, factors[0], factors[1]):
+        print(f'Factors: {factors[0]}, {factors[1]}')
+    else:
+        print('Invalid Factors')
+    
